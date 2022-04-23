@@ -11,15 +11,16 @@ const Book = (props) => {
 
     const { book, updateBookType, shelfType } = props;
 
-    // Update Book's shelf
+    /* Update Book's shelf */
     const updateBook = (shelf) => {
         updateBookType(book, shelf)
     }
+    const hasImage = book.hasOwnProperty('imageLinks') ? true : false
     return(
         <li key={book.id}>
         <div className="book">
           <div className="book-top">
-            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${book.imageLinks.smallThumbnail})` }}></div>
+            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${hasImage && book.imageLinks.smallThumbnail})` }}></div>
             <div className="book-shelf-changer">
               <select value={shelfType} onChange={(e) => updateBook(e.target.value)}>
                 <option value="move" disabled>Move to...</option>
