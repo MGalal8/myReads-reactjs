@@ -12,9 +12,5 @@ export default {
             'id' : 'read',
             'name' : 'Read'
         },
-        none: {
-            'id' : 'none',
-            'name' : 'None'
-        }
     }
 }
