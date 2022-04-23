@@ -1,7 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import shelfType from './config/shelfType'
 import Home from './views/Home'
 import Search from './views/Search'
@@ -41,6 +41,7 @@ class BooksApp extends React.Component {
   }
 
 
+
   render() {
     return (
       <div className="app">
@@ -60,6 +61,7 @@ class BooksApp extends React.Component {
             books = {this.state.books}
             />
           }/>
+          <Route path="*" element={<Navigate to="/" replace />}  />
         </Routes>
       </div>
     )
