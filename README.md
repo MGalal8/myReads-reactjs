@@ -2,12 +2,6 @@
 
 MyReads is a project from Udacity's React Nanodegree course. It allows users to place selected books into a designated shelf. Also, users can search the Udacity books API to add books to their shelves.The Homepage represents the bookshelves. The Search page allows the user to search for books.
 
-## Table of Contents
-
-- [Prerequisites] (#Prerequisites)
-- [Installation and Launching](#Installation and Launching)
-- [Folder Structure](#folder-structure)
-
 
 ## Prerequisites
 
