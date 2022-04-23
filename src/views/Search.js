@@ -2,6 +2,8 @@ import React from 'react';
 import * as BooksAPI from '.././BooksAPI'
 import Book from '../components/Book';
 import {Link} from 'react-router-dom'
+import {DebounceInput} from 'react-debounce-input';
+
 
 /**
  * @description Handle search form and results
@@ -14,17 +16,21 @@ class Search extends React.Component {
         query : '',
         searchResult: []
     }
+    /**
+     * @description Remove white space from string
+     * @param  {String} str
+     */
+    removeWhiteSpace = (str) => (str.replace(/  +/g,' ').trim())
 
 
     /**
      * @description Update Search query then call handleSearch method
      * @param  {string} query
      */
-    updateQuery = (query) => {
-        this.setState( () => ({query: query.trim() }))
-        this.handleSearch(query)
+    updateQuery = (e) => {
+        this.setState( () => ({query: e.target.value }))
+        this.handleSearch(this.state.query)
     }
-
 
     /**
      * @description Call Search method API to retrieve books then search for book resualts into our book to sync their shelf.
@@ -32,8 +38,13 @@ class Search extends React.Component {
      */
     handleSearch = (query) => {
 
-        if (query.trim() === '') return
+        query = this.removeWhiteSpace(query)
+        if (query.length === 0) {
+            this.setState( () => ( {searchResult : []} ))
+            return
+        }
 
+        this.setState( () => ( {searchResult : []} ))
         BooksAPI.search(query).then( (res) => {
 
             const result = Boolean(res.error)? [] : res
@@ -60,12 +71,13 @@ class Search extends React.Component {
                         However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                         you don't find a specific author or title. Every search is limited by search terms.
                         */}
-                        <input
-                            type="text"
+                        <DebounceInput
                             className='search-input'
                             placeholder='Search for Books'
+                            onChange={this.updateQuery}
                             value={this.state.query}
-                            onChange= {(e) => this.updateQuery(e.target.value) }
+                            minLength={2}
+                            debounceTimeout={300}
                         />
                     </div>
                 </div>
